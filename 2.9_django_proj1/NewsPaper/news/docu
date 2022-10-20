@@ -1,0 +1,68 @@
+u1 = User.objects.create_user('user_1')
+u2 = User.objects.create_user('user_2')
+a1 = Author.objects.create(authorUser='Misha')
+a2 = Author.objects.create(authorUser='Shisha')
+itCat = Category.objects.create(category='IT)
+ecCat = Category.objects.create(category='Economic')
+poCat = Category.objects.create(category='Politics')
+spCat = Category.objects.create(category='Sport')
+nw_1 = Post.objects.create(author=a1,
+			     categoryType = 'nw',
+		 	     title = 'someTitle',
+			     text = 'someText',)
+ar_1 = Post.objects.create(author=a1,
+			     categoryType = 'ar',
+		 	     title = 'someTitleFor.ar_1',
+			     text = 'someTextFor.ar_1',)
+ar_2 = Post.objects.create(author=a1,
+			     categoryType = 'ar',
+		 	     title = 'someTitleFor.ar_2',
+			     text = 'someTextFor.ar_2',)
+
+nw_1.category.add(itCat)
+nw_1.category.add(ecCat)
+ar_1.category.add(poCat)
+ar_2.category.add(spCat)
+
+com1 = Comment.objects.add(post = nw_1,
+			   user = u1,
+			   commentText = 'SomeText',)
+
+com2 = Comment.objects.add(post = nw_1,
+			   user = u1,
+			   commentText = 'SomeText',)
+
+com3 = Comment.objects.add(post = ar_1,
+			   user = u2,
+			   commentText = 'SomeText',)
+
+com4 = Comment.objects.add(post = ar_2,
+			   user = a1.authorUser,
+			   commentText = 'SomeText',)
+com1.like()
+com2.dislike()
+com3.like()
+com4.dislike()
+nw_1.like()
+ar_1.dislike()
+ar_2.like()
+
+a1.update_rating()
+a2.update_rating()
+
+a = Author.objects.order_by('-authorRating')[:1]
+for i in a:
+	i.ratingAuthor
+	i.authorUser.username
+
+
+best_post = Post.objects.order_by('-rating')[:1]
+for i in best_post:
+	i.date_time
+	i.author
+	i.rating
+	i.title
+	i.preview()
+
+comments = Comment.objects.filter(post = best_post).values('commentTime', 'user', 'rating', 'commentText')
+comments
