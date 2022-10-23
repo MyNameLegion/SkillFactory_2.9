@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+{% load filtres %}
+{% block title %}
+Post
+{% endblock title %}
+
+
+{% block content %}
+<h1>Детальная информация о новости {{post.id}}</h1>
+Автор - {{ post.author.authorUser }}
+<br>
+Время поста - {{ post.date_time }}
+<br>
+Категории -
+{% for x in post.category.all %}
+{{ x }}
+{% endfor %}
+<br>
+Тип поста - {{ post.categoryType }}
+<br>
+Заголовок - {{ post.title|madness }}
+<br>
+Текст - {{ post.text|madness }}
+<br>
+Рейтинг - {{ post.rating }}
+{% endblock content %}
+
